@@ -12,3 +12,4 @@ C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\refin
 C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.pdb
 C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.genruntimeconfig.cache
 C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\ref\Expense-Tracker.dll
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.sourcelink.json
