@@ -1,0 +1,14 @@
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\bin\Debug\net8.0\Expense-Tracker.exe
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\bin\Debug\net8.0\Expense-Tracker.deps.json
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\bin\Debug\net8.0\Expense-Tracker.runtimeconfig.json
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\bin\Debug\net8.0\Expense-Tracker.dll
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\bin\Debug\net8.0\Expense-Tracker.pdb
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.AssemblyInfoInputs.cache
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.AssemblyInfo.cs
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.csproj.CoreCompileInputs.cache
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.dll
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\refint\Expense-Tracker.dll
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.pdb
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\Expense-Tracker.genruntimeconfig.cache
+C:\Users\FAST\OneDrive\Desktop\New folder\Expense-Tracker\obj\Debug\net8.0\ref\Expense-Tracker.dll
