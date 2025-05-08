@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Expense
+public class ExpenseTracker
 {
 
     public class Login
@@ -27,22 +27,19 @@ public class Expense
 
     public class Transaction : Login
     {
-        protected int deposit = 0;
-        protected int balance = 0;
+        public int deposit = 0;
+        public int balance = 0;
         public void info()
         {
-            Console.WriteLine("Successfully Logged! Welcome, " + userName);
+            Console.WriteLine("Successfully Logged! Welcome, " + userName.ToUpper());
+
         }
         public void depositAmount()
         {
-            Console.WriteLine("Enter the amount to deposit: ");
+            Console.Write("Enter the amount to deposit: ");
             deposit = int.Parse(Console.ReadLine());
             balance += deposit;
-            Console.WriteLine("Your current balance is: " + balance);
-        }
-        public void viewBalance()
-        {
-            Console.WriteLine("Your current balance is: " + balance);
+
         }
     }
 
@@ -63,14 +60,16 @@ public class Expense
         {
             if (login.Authenticate())
             {
+                transaction.userName = login.userName;
                 isAuthenticated = true;
                 transaction.info();
 
                 while (true)
                 {
+                    Console.WriteLine("Your current balance is: $ " + transaction.balance);
                     Console.WriteLine("Choose an option:");
                     Console.WriteLine("1. Deposit Amount");
-                    Console.WriteLine("2. View Balance");
+                    Console.WriteLine("2.Other Features (coming soon)");
                     Console.WriteLine("3. Exit");
 
                     Console.Write("Enter your choice: ");
@@ -83,7 +82,7 @@ public class Expense
                             break;
 
                         case "2":
-                            transaction.viewBalance();
+                            Console.WriteLine("more feature to be added in future.");
                             break;
 
                         case "3":
