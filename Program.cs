@@ -2,6 +2,17 @@
 
 public class ExpenseTracker
 {
+    public class DataStore
+    {
+        public static int CurrentBalance = 0;
+        public static int MonthlyExpense = 0;
+     public static int AvailableBalance
+        {
+            get { return CurrentBalance - MonthlyExpense; }
+        }
+
+
+    }
 
     public class Login
     {
@@ -27,21 +38,46 @@ public class ExpenseTracker
 
     public class Transaction : Login
     {
-        public int deposit = 0;
-        public int balance = 0;
+
+        private int deposit = 0;
         public void info()
         {
             Console.WriteLine("Successfully Logged! Welcome, " + userName.ToUpper());
-
         }
         public void depositAmount()
         {
             Console.Write("Enter the amount to deposit: ");
             deposit = int.Parse(Console.ReadLine());
-            balance += deposit;
+            DataStore.CurrentBalance += deposit;
 
         }
     }
+
+    public class MonthlyExpense
+    {
+
+
+        public void monthlyExpense()
+        {
+            Console.WriteLine("Enter your monthly expenses:");
+            Console.Write("Rent: ");
+            int rent = int.Parse(Console.ReadLine());
+            Console.Write("Groceries: ");
+            int groceries = int.Parse(Console.ReadLine());
+            Console.Write("Bills: ");
+            int bills = int.Parse(Console.ReadLine());
+            int totalExpenses = rent + groceries + bills;
+            DataStore.MonthlyExpense += totalExpenses;
+            Console.WriteLine("Total Monthly Expenses: " + totalExpenses);
+        }
+
+
+    }
+
+
+
+
+
 
     public static void Main(string[] args)
     {
@@ -54,6 +90,7 @@ public class ExpenseTracker
         login.password = Console.ReadLine();
 
         Transaction transaction = new Transaction();
+        MonthlyExpense monthlyExpense = new MonthlyExpense();
 
         bool isAuthenticated = false;
         while (!isAuthenticated)
@@ -66,7 +103,7 @@ public class ExpenseTracker
 
                 while (true)
                 {
-                    Console.WriteLine("Your current balance is: $ " + transaction.balance);
+                    Console.WriteLine("\nCurrent Balance: " + DataStore.AvailableBalance);
                     Console.WriteLine("Choose an option:");
                     Console.WriteLine("1. Deposit Amount");
                     Console.WriteLine("2.Other Features (coming soon)");
@@ -82,7 +119,9 @@ public class ExpenseTracker
                             break;
 
                         case "2":
-                            Console.WriteLine("more feature to be added in future.");
+                            monthlyExpense.monthlyExpense();
+
+
                             break;
 
                         case "3":
@@ -106,6 +145,8 @@ public class ExpenseTracker
                 login.password = Console.ReadLine();
             }
         }
+
+
 
     }
 
