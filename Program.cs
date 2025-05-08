@@ -46,9 +46,24 @@ public class ExpenseTracker
         }
         public void depositAmount()
         {
-            Console.Write("Enter the amount to deposit: ");
-            deposit = int.Parse(Console.ReadLine());
-            DataStore.CurrentBalance += deposit;
+            try
+            {
+                Console.Write("Enter the amount to deposit: ");
+                deposit = int.Parse(Console.ReadLine());
+                if (deposit > 0)
+                {
+                    DataStore.CurrentBalance += deposit;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a positive number.");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + " Please enter positive Number.");
+            }
 
         }
     }
