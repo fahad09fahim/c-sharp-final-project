@@ -6,7 +6,7 @@ public class ExpenseTracker
     {
         public static int CurrentBalance = 0;
         public static int MonthlyExpense = 0;
-     public static int AvailableBalance
+        public static int AvailableBalance
         {
             get { return CurrentBalance - MonthlyExpense; }
         }
@@ -53,7 +53,7 @@ public class ExpenseTracker
         }
     }
 
-    public class MonthlyExpense
+    public abstract class MonthlyExpense
     {
 
 
@@ -67,14 +67,51 @@ public class ExpenseTracker
             Console.Write("Bills: ");
             int bills = int.Parse(Console.ReadLine());
             int totalExpenses = rent + groceries + bills;
-            DataStore.MonthlyExpense += totalExpenses;
-            Console.WriteLine("Total Monthly Expenses: " + totalExpenses);
+
+
+            if (totalExpenses > DataStore.AvailableBalance)
+            {
+                Console.WriteLine("Warning: You cannot expense more than your available balance!");
+                Console.WriteLine("Total monthly expense you were input: " + totalExpenses);
+                Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
+            }
+            else
+            {
+                DataStore.MonthlyExpense += totalExpenses;
+                Console.WriteLine("Total Monthly Expenses: " + totalExpenses);
+            }
         }
 
-
+        abstract public void dailyExpense();
     }
 
+    public class DailyExpense : MonthlyExpense
+    {
+        public override void dailyExpense()
+        {
+            Console.WriteLine("Enter your daily expenses:");
+            Console.Write("Food: ");
+            int food = int.Parse(Console.ReadLine());
+            Console.Write("Transport: ");
+            int transport = int.Parse(Console.ReadLine());
+            Console.Write("Entertainment: ");
+            int entertainment = int.Parse(Console.ReadLine());
+            int totalDailyExpenses = food + transport + entertainment;
 
+
+            if (totalDailyExpenses > DataStore.AvailableBalance)
+            {
+                Console.WriteLine("Warning: You cannot expense more than your available balance!");
+                Console.WriteLine("Total daily expense you were input: " + totalDailyExpenses);
+                Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
+            }
+            else
+            {
+                DataStore.MonthlyExpense += totalDailyExpenses;
+                Console.WriteLine("Total Daily Expenses: " + totalDailyExpenses);
+            }
+        }
+    }
 
 
 
@@ -90,7 +127,7 @@ public class ExpenseTracker
         login.password = Console.ReadLine();
 
         Transaction transaction = new Transaction();
-        MonthlyExpense monthlyExpense = new MonthlyExpense();
+        DailyExpense dx = new DailyExpense();
 
         bool isAuthenticated = false;
         while (!isAuthenticated)
@@ -100,14 +137,16 @@ public class ExpenseTracker
                 transaction.userName = login.userName;
                 isAuthenticated = true;
                 transaction.info();
+                bool hasDeposited = false;
 
                 while (true)
                 {
                     Console.WriteLine("\nCurrent Balance: " + DataStore.AvailableBalance);
                     Console.WriteLine("Choose an option:");
                     Console.WriteLine("1. Deposit Amount");
-                    Console.WriteLine("2.Other Features (coming soon)");
-                    Console.WriteLine("3. Exit");
+                    Console.WriteLine("2. Monthly Expense");
+                    Console.WriteLine("3. Daily Expense");
+                    Console.WriteLine("4. Exit");
 
                     Console.Write("Enter your choice: ");
                     string choice = Console.ReadLine();
@@ -116,15 +155,33 @@ public class ExpenseTracker
                     {
                         case "1":
                             transaction.depositAmount();
+                            hasDeposited = true;
                             break;
 
                         case "2":
-                            monthlyExpense.monthlyExpense();
-
-
+                            if (!hasDeposited)
+                            {
+                                Console.WriteLine("Please deposit an amount before entering monthly expenses.");
+                            }
+                            else
+                            {
+                                dx.monthlyExpense();
+                            }
                             break;
 
                         case "3":
+                            if (!hasDeposited)
+                            {
+                                Console.WriteLine("Please deposit an amount before entering monthly expenses.");
+                            }
+                            else
+                            {
+                                dx.dailyExpense();
+                            }
+                            break;
+                            return;
+
+                        case "4":
                             Console.WriteLine("Thanks for using Expense Tracker.");
                             return;
 
