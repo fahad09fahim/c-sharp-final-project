@@ -69,7 +69,7 @@ public class ExpenseTracker
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a positive number.");
+                    Console.WriteLine("Please enter positive number.");
                 }
 
             }
@@ -87,26 +87,55 @@ public class ExpenseTracker
 
         public void monthlyExpense()
         {
-            Console.WriteLine("Enter your monthly expenses:");
+            Console.WriteLine("Enter your monthly Fixed expenses: (Note: You can only enter it once a month.)");
+
+            int rent = 0;
+            int groceries = 0;
+            int bills = 0;
+
 
             try
             {
+                int totalExpenses = 0;
                 Console.Write("Rent: ");
-                int rent = int.Parse(Console.ReadLine());
+                rent = (int.Parse(Console.ReadLine()));
+                if (rent > 0)
+                {
+                    totalExpenses += rent;
+                    Console.Write("Groceries: ");
+                    groceries = int.Parse(Console.ReadLine());
+                    if (groceries > 0)
+                    {
+                        totalExpenses += groceries;
+                        Console.Write("Utility Bills: ");
+                        bills = int.Parse(Console.ReadLine());
+                        if (bills > 0)
+                        {
+                            totalExpenses += bills;
+                        }
+                        else
+                        {
+                            totalExpenses *= 0;
+                            Console.WriteLine("Invalid Input.(Possible inputs are only positive number.)");
+                        }
+                    }
+                    else
+                    {
+                        totalExpenses *= 0;
+                        Console.WriteLine("Invalid Input.(Possible inputs are only positive number.)");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Input.(Possible inputs are only positive number.)");
+                }
 
-                Console.Write("Groceries: ");
-                int groceries = int.Parse(Console.ReadLine());
-
-                Console.Write("Utility Bills: ");
-                int bills = int.Parse(Console.ReadLine());
-
-                int totalExpenses = rent + groceries + bills;
 
 
                 if (totalExpenses > DataStore.AvailableBalance)
                 {
                     Console.WriteLine("Warning: You cannot expense more than your available balance!");
-                    Console.WriteLine("Total monthly expense you were input: " + totalExpenses);
+                    Console.WriteLine("Total monthly expense you entered: " + totalExpenses);
                     Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
                 }
                 else
@@ -137,21 +166,46 @@ public class ExpenseTracker
     {
         public override void dailyExpense()
         {
-            Console.WriteLine("Enter your daily expenses:");
+            Console.WriteLine("Enter your daily expenses:(Note: You can only enter positive number.)");
             try
             {
+                int totalDailyExpenses = 0;
                 Console.Write("Food: ");
                 int food = int.Parse(Console.ReadLine());
+                if (food > 0)
+                {
+                    totalDailyExpenses += food;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Input.(Possible input only positive number.)");
+                }
                 Console.Write("Transport: ");
                 int transport = int.Parse(Console.ReadLine());
+                if (transport > 0)
+                {
+                    totalDailyExpenses += transport;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Input.(Possible input only positive number.)");
+                }
                 Console.Write("Entertainment: ");
                 int entertainment = int.Parse(Console.ReadLine());
-                int totalDailyExpenses = food + transport + entertainment;
+                if (entertainment > 0)
+                {
+                    totalDailyExpenses += entertainment;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Input.(Possible input only positive number.)");
+                }
+
 
                 if (totalDailyExpenses > DataStore.AvailableBalance)
                 {
                     Console.WriteLine("Warning: You cannot expense more than your available balance!");
-                    Console.WriteLine("Total daily expense you were input: " + totalDailyExpenses);
+                    Console.WriteLine("Total daily expense you entered: " + totalDailyExpenses);
                     Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
                 }
                 else
@@ -186,7 +240,7 @@ public class ExpenseTracker
     {
         public void monthlyExpense()
         {
-            Console.WriteLine("Monthly Expense Details:");
+            Console.WriteLine("Monthly Expense Details: ");
             Console.WriteLine("Rent: " + DataStore.Rent);
             Console.WriteLine("Groceries: " + DataStore.Groceries);
             Console.WriteLine("Utility Bills: " + DataStore.UtilityBills);
@@ -257,7 +311,17 @@ public class ExpenseTracker
                             }
                             else
                             {
-                                dx.monthlyExpense();
+                                if (DataStore.TotalMonthlyExpenses > 0 && DataStore.Rent > 0 && DataStore.Groceries > 0 && DataStore.UtilityBills > 0)
+                                {
+                                    Console.WriteLine("You have already entered monthly expenses. Please choose option 4 to view them.");
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You can only enter monthly expenses once.");
+                                    dx.monthlyExpense();
+                                }
+
                             }
                             break;
 
