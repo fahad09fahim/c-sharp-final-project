@@ -31,9 +31,9 @@ public class ExpenseTracker
     {
         //Hardcoded user credentials for login
         string[,] users = {
-            { "fahim", "test12" },
-            { "hamza", "pass123" },
-            {"huma","word123"}
+            { "fahad", "test12" },
+            { "hamza", "test34" },
+            {"humaera","test56"}
         };
         public string userName;
         public string password;
@@ -87,68 +87,77 @@ public class ExpenseTracker
 
         public void monthlyExpense()
         {
-            Console.WriteLine("Enter your monthly Fixed expenses: (Note: You can only enter it once a month.)");
+            Console.WriteLine("Enter your monthly fixed expenses: (Note: You can only enter at once in a month.)");
+
 
             int rent = 0;
             int groceries = 0;
             int bills = 0;
-
+            int totalExpenses = 0;
 
             try
             {
-                int totalExpenses = 0;
+
                 Console.Write("Rent: ");
                 rent = (int.Parse(Console.ReadLine()));
                 if (rent > 0)
                 {
-                    totalExpenses += rent;
                     Console.Write("Groceries: ");
                     groceries = int.Parse(Console.ReadLine());
                     if (groceries > 0)
                     {
-                        totalExpenses += groceries;
                         Console.Write("Utility Bills: ");
                         bills = int.Parse(Console.ReadLine());
                         if (bills > 0)
                         {
+                            totalExpenses += rent;
+                            totalExpenses += groceries;
                             totalExpenses += bills;
+
+
+                            //Total monthly  expenses calculation
+                            if (totalExpenses > DataStore.AvailableBalance)
+                            {
+                                Console.WriteLine("Warning: You cannot expense more than your available balance!");
+                                Console.WriteLine("Total monthly expense you entered: " + totalExpenses);
+                                Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
+                            }
+                            else
+                            {
+                                //for storing monthly individual expenses in DataStore
+                                DataStore.Rent = +rent;
+                                DataStore.Groceries = +groceries;
+                                DataStore.UtilityBills = +bills;
+                                DataStore.TotalMonthlyExpenses = +totalExpenses;
+                                //for calculating total expenses
+                                DataStore.TotalExpenses += totalExpenses;
+                                Console.WriteLine("Total Monthly Expenses: " + totalExpenses);
+                            }
+
+
+
+
                         }
                         else
                         {
                             totalExpenses *= 0;
-                            Console.WriteLine("Invalid Input.(Possible inputs are only positive number.)");
+                            Console.WriteLine("Invalid Input.(Possible inputs are only positive numbers.)");
                         }
                     }
                     else
                     {
                         totalExpenses *= 0;
-                        Console.WriteLine("Invalid Input.(Possible inputs are only positive number.)");
+                        Console.WriteLine("Invalid Input.(Possible inputs are only positive numbers.)");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid Input.(Possible inputs are only positive number.)");
+                    Console.WriteLine("Invalid Input.(Possible inputs are only positive numbers.)");
                 }
 
 
 
-                if (totalExpenses > DataStore.AvailableBalance)
-                {
-                    Console.WriteLine("Warning: You cannot expense more than your available balance!");
-                    Console.WriteLine("Total monthly expense you entered: " + totalExpenses);
-                    Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
-                }
-                else
-                {
-                    //for storing monthly individual expenses in DataStore
-                    DataStore.Rent = +rent;
-                    DataStore.Groceries = +groceries;
-                    DataStore.UtilityBills = +bills;
-                    DataStore.TotalMonthlyExpenses = +totalExpenses;
-                    //for calculating total expenses
-                    DataStore.TotalExpenses += totalExpenses;
-                    Console.WriteLine("Total Monthly Expenses: " + totalExpenses);
-                }
+
             }
             catch (Exception e)
             {
@@ -166,60 +175,74 @@ public class ExpenseTracker
     {
         public override void dailyExpense()
         {
-            Console.WriteLine("Enter your daily expenses:(Note: You can only enter positive number.)");
+            Console.WriteLine("Enter your daily expenses:)");
+
+
+            int food = 0;
+            int transport = 0;
+            int entertainment = 0;
+            int totalDailyExpenses = 0;
             try
             {
-                int totalDailyExpenses = 0;
                 Console.Write("Food: ");
-                int food = int.Parse(Console.ReadLine());
+                food = int.Parse(Console.ReadLine());
                 if (food > 0)
                 {
-                    totalDailyExpenses += food;
+
+                    Console.Write("Transport: ");
+                    transport = int.Parse(Console.ReadLine());
+                    if (transport > 0)
+                    {
+
+                        Console.Write("Entertainment: ");
+                        entertainment = int.Parse(Console.ReadLine());
+                        if (entertainment > 0)
+                        {
+                            totalDailyExpenses += food;
+                            totalDailyExpenses += transport;
+                            totalDailyExpenses += entertainment;
+
+                            //Total daily expenses calculation
+                            if (totalDailyExpenses > DataStore.AvailableBalance)
+                            {
+                                Console.WriteLine("Warning: You cannot expense more than your available balance!");
+                                Console.WriteLine("Total daily expense you entered: " + totalDailyExpenses);
+                                Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
+                            }
+                            else
+                            {
+                                //for storing daily individual expenses in DataStore
+                                DataStore.Food = +food;
+                                DataStore.Transport = +transport;
+                                DataStore.Entertainment = +entertainment;
+                                DataStore.TotalDailyExpenses = +totalDailyExpenses;
+
+                                //for calculating total expenses
+                                DataStore.TotalExpenses += totalDailyExpenses;
+                                Console.WriteLine("Total Daily Expenses: " + totalDailyExpenses);
+                            }
+
+                        }
+                        else
+                        {
+                            totalDailyExpenses *= 0;
+                            Console.WriteLine("Invalid Input.(Possible inputs are only positive numbers.)");
+                        }
+                    }
+                    else
+                    {
+                        totalDailyExpenses *= 0;
+                        Console.WriteLine("Invalid Input.(Possible inputs are only positive numbers.)");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid Input.(Possible input only positive number.)");
-                }
-                Console.Write("Transport: ");
-                int transport = int.Parse(Console.ReadLine());
-                if (transport > 0)
-                {
-                    totalDailyExpenses += transport;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Input.(Possible input only positive number.)");
-                }
-                Console.Write("Entertainment: ");
-                int entertainment = int.Parse(Console.ReadLine());
-                if (entertainment > 0)
-                {
-                    totalDailyExpenses += entertainment;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Input.(Possible input only positive number.)");
+                    Console.WriteLine("Invalid Input.(Possible inputs are only positive numbers.)");
                 }
 
 
-                if (totalDailyExpenses > DataStore.AvailableBalance)
-                {
-                    Console.WriteLine("Warning: You cannot expense more than your available balance!");
-                    Console.WriteLine("Total daily expense you entered: " + totalDailyExpenses);
-                    Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
-                }
-                else
-                {
-                    //for storing daily individual expenses in DataStore
-                    DataStore.Food = +food;
-                    DataStore.Transport = +transport;
-                    DataStore.Entertainment = +entertainment;
-                    DataStore.TotalDailyExpenses = +totalDailyExpenses;
 
-                    //for calculating total expenses
-                    DataStore.TotalExpenses += totalDailyExpenses;
-                    Console.WriteLine("Total Daily Expenses: " + totalDailyExpenses);
-                }
+
             }
             catch (Exception e)
             {
@@ -241,18 +264,18 @@ public class ExpenseTracker
         public void monthlyExpense()
         {
             Console.WriteLine("Monthly Expense Details: ");
-            Console.WriteLine("Rent: " + DataStore.Rent);
-            Console.WriteLine("Groceries: " + DataStore.Groceries);
-            Console.WriteLine("Utility Bills: " + DataStore.UtilityBills);
+            Console.WriteLine("Rent: " + (DataStore.Rent > 0 ? DataStore.Rent : 0));
+            Console.WriteLine("Groceries: " + (DataStore.Groceries > 0 ? DataStore.Groceries : 0));
+            Console.WriteLine("Utility Bills: " + (DataStore.UtilityBills > 0 ? DataStore.UtilityBills : 0));
             Console.WriteLine("Total Monthly Expenses: " + DataStore.TotalMonthlyExpenses);
         }
 
         public void dailyExpense()
         {
             Console.WriteLine("Daily Expense Details:");
-            Console.WriteLine("Food: " + DataStore.Food);
-            Console.WriteLine("Transport: " + DataStore.Transport);
-            Console.WriteLine("Entertainment: " + DataStore.Entertainment);
+            Console.WriteLine("Food: " + (DataStore.Food > 0 ? DataStore.Food : 0));
+            Console.WriteLine("Transport: " + (DataStore.Transport > 0 ? DataStore.Transport : 0));
+            Console.WriteLine("Entertainment: " + (DataStore.Entertainment > 0 ? DataStore.Entertainment : 0));
             Console.WriteLine("Total Daily Expenses: " + DataStore.TotalDailyExpenses);
         }
     }
@@ -382,9 +405,7 @@ public class ExpenseTracker
             }
         }
 
-
-
     }
 
-
 }
+
