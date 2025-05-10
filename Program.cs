@@ -175,7 +175,7 @@ public class ExpenseTracker
     {
         public override void dailyExpense()
         {
-            Console.WriteLine("Enter your daily expenses:)");
+            Console.WriteLine("Enter your daily expenses: ");
 
 
             int food = 0;
