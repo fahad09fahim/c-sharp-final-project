@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+   ====================== Instructions:=========================
+    Login credentials are: 
+    Username: fahad password: test12, Username: hamza password: test34, Username: humaera password: test56
+    1. After logging in, you can deposit an amount.(without deposit you cannot enter monthly and daily expenses).
+    2. You can enter monthly expenses only once in a month.
+    3. You can enter daily expenses multiple times in a month.
+    4. You can view your monthly and daily expenses.
+    5. Negative numbers, invalid inputs and zero are not allowed.
+    6. You cannot expense more than your available balance.
+    7. 
+
+*/
+using System;
 
 public class ExpenseTracker
 {
@@ -67,6 +80,10 @@ public class ExpenseTracker
                 {
                     DataStore.CurrentBalance += deposit;
                 }
+                else if (deposit == 0)
+                {
+                    Console.WriteLine("You cannot deposit zero.");
+                }
                 else
                 {
                     Console.WriteLine("Please enter positive number.");
@@ -84,11 +101,9 @@ public class ExpenseTracker
     public abstract class MonthlyExpense
     {
 
-
         public void monthlyExpense()
         {
             Console.WriteLine("Enter your monthly fixed expenses: (Note: You can only enter at once in a month.)");
-
 
             int rent = 0;
             int groceries = 0;
@@ -97,18 +112,18 @@ public class ExpenseTracker
 
             try
             {
-
+                //Input for monthly expenses
                 Console.Write("Rent: ");
                 rent = (int.Parse(Console.ReadLine()));
-                if (rent > 0)
+                if (rent >= 0)
                 {
                     Console.Write("Groceries: ");
                     groceries = int.Parse(Console.ReadLine());
-                    if (groceries > 0)
+                    if (groceries >= 0)
                     {
                         Console.Write("Utility Bills: ");
                         bills = int.Parse(Console.ReadLine());
-                        if (bills > 0)
+                        if (bills >= 0)
                         {
                             totalExpenses += rent;
                             totalExpenses += groceries;
@@ -134,9 +149,6 @@ public class ExpenseTracker
                                 Console.WriteLine("Total Monthly Expenses: " + totalExpenses);
                             }
 
-
-
-
                         }
                         else
                         {
@@ -154,8 +166,6 @@ public class ExpenseTracker
                 {
                     Console.WriteLine("Invalid Input.(Possible inputs are only positive numbers.)");
                 }
-
-
 
 
             }
@@ -184,19 +194,19 @@ public class ExpenseTracker
             int totalDailyExpenses = 0;
             try
             {
+                //Input for daily expenses
                 Console.Write("Food: ");
                 food = int.Parse(Console.ReadLine());
-                if (food > 0)
+                if (food >= 0)
                 {
-
                     Console.Write("Transport: ");
                     transport = int.Parse(Console.ReadLine());
-                    if (transport > 0)
+                    if (transport >= 0)
                     {
 
                         Console.Write("Entertainment: ");
                         entertainment = int.Parse(Console.ReadLine());
-                        if (entertainment > 0)
+                        if (entertainment >= 0)
                         {
                             totalDailyExpenses += food;
                             totalDailyExpenses += transport;
@@ -240,16 +250,11 @@ public class ExpenseTracker
                     Console.WriteLine("Invalid Input.(Possible inputs are only positive numbers.)");
                 }
 
-
-
-
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message + " Enter positive Number.");
             }
-
-
 
         }
     }
@@ -324,7 +329,7 @@ public class ExpenseTracker
                     {
                         case "1":
                             transaction.depositAmount();
-                            hasDeposited = true;
+                            hasDeposited = (DataStore.CurrentBalance > 0) ? true : false;
                             break;
 
                         case "2":
