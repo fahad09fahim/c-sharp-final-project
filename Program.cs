@@ -2,14 +2,15 @@
    ====================== Instructions:=========================
     Login credentials are: 
     Username: fahad password: test12, Username: hamza password: test34, Username: humaera password: test56
-    1. After logging in, you can deposit an amount.(without deposit you cannot enter monthly and daily expenses).
+    Feature of this program:
+    1. After logging in, you can deposit an amount.(without deposit you cannot enter monthly and daily expenses, #zero deposit amount not accepted).
     2. You can enter monthly expenses only once in a month.
     3. You can enter daily expenses multiple times in a month.
     4. You can view your monthly and daily expenses.
-    5. Negative numbers, invalid inputs and zero are not allowed.
-    6. You cannot expense more than your available balance.
-    7. 
-
+    5. You cannot view your monthly and daily expenses without depositing an amount.
+    6. Negative numbers, invalid inputs are not allowed.
+    7. You cannot expense more than your available balance.
+    8. You can exit the program at any time.
 */
 using System;
 
@@ -19,22 +20,22 @@ public class ExpenseTracker
     //To store and calculate all input data
     public class DataStore
     {
-        public static int CurrentBalance = 0;
-        public static int TotalExpenses = 0;
-        public static int AvailableBalance
+        public static double CurrentBalance = 0;
+        public static double TotalExpenses = 0;
+        public static double AvailableBalance
         {
             get { return CurrentBalance - TotalExpenses; }
         }
 
-        public static int TotalMonthlyExpenses = 0;
-        public static int Rent = 0;
-        public static int Groceries = 0;
-        public static int UtilityBills = 0;
+        public static double TotalMonthlyExpenses = 0;
+        public static double Rent = 0;
+        public static double Groceries = 0;
+        public static double UtilityBills = 0;
 
-        public static int TotalDailyExpenses = 0;
-        public static int Food = 0;
-        public static int Transport = 0;
-        public static int Entertainment = 0;
+        public static double TotalDailyExpenses = 0;
+        public static double Food = 0;
+        public static double Transport = 0;
+        public static double Entertainment = 0;
 
 
 
@@ -65,7 +66,7 @@ public class ExpenseTracker
     public class Transaction : Login
     {
 
-        private int deposit = 0;
+        private double deposit = 0;
         public void info()
         {
             Console.WriteLine("Successfully Logged! Welcome, " + userName.ToUpper());
@@ -75,7 +76,7 @@ public class ExpenseTracker
             try
             {
                 Console.Write("Enter the amount to deposit: ");
-                deposit = int.Parse(Console.ReadLine());
+                deposit = double.Parse(Console.ReadLine());
                 if (deposit > 0)
                 {
                     DataStore.CurrentBalance += deposit;
@@ -105,25 +106,25 @@ public class ExpenseTracker
         {
             Console.WriteLine("Enter your monthly fixed expenses: (Note: You can only enter at once in a month.)");
 
-            int rent = 0;
-            int groceries = 0;
-            int bills = 0;
-            int totalExpenses = 0;
+            double rent = 0;
+            double groceries = 0;
+            double bills = 0;
+            double totalExpenses = 0;
 
             try
             {
                 //Input for monthly expenses
                 Console.Write("Rent: ");
-                rent = (int.Parse(Console.ReadLine()));
-                if (rent >= 0)
+                rent = (double.Parse(Console.ReadLine()));
+                if (rent > 0)
                 {
                     Console.Write("Groceries: ");
-                    groceries = int.Parse(Console.ReadLine());
-                    if (groceries >= 0)
+                    groceries = double.Parse(Console.ReadLine());
+                    if (groceries > 0)
                     {
                         Console.Write("Utility Bills: ");
-                        bills = int.Parse(Console.ReadLine());
-                        if (bills >= 0)
+                        bills = double.Parse(Console.ReadLine());
+                        if (bills > 0)
                         {
                             totalExpenses += rent;
                             totalExpenses += groceries;
@@ -134,8 +135,8 @@ public class ExpenseTracker
                             if (totalExpenses > DataStore.AvailableBalance)
                             {
                                 Console.WriteLine("Warning: You cannot expense more than your available balance!");
-                                Console.WriteLine("Total monthly expense you entered: " + totalExpenses);
-                                Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
+                                Console.WriteLine($"Total monthly expense you entered: ${totalExpenses:F2}");
+                                Console.WriteLine($"Total Available Balance: ${DataStore.AvailableBalance:F2}");
                             }
                             else
                             {
@@ -146,7 +147,7 @@ public class ExpenseTracker
                                 DataStore.TotalMonthlyExpenses = +totalExpenses;
                                 //for calculating total expenses
                                 DataStore.TotalExpenses += totalExpenses;
-                                Console.WriteLine("Total Monthly Expenses: " + totalExpenses);
+                                Console.WriteLine($"Total Monthly Expenses: ${totalExpenses:F2}");
                             }
 
                         }
@@ -188,24 +189,24 @@ public class ExpenseTracker
             Console.WriteLine("Enter your daily expenses: ");
 
 
-            int food = 0;
-            int transport = 0;
-            int entertainment = 0;
-            int totalDailyExpenses = 0;
+            double food = 0;
+            double transport = 0;
+            double entertainment = 0;
+            double totalDailyExpenses = 0;
             try
             {
                 //Input for daily expenses
                 Console.Write("Food: ");
-                food = int.Parse(Console.ReadLine());
+                food = double.Parse(Console.ReadLine());
                 if (food >= 0)
                 {
                     Console.Write("Transport: ");
-                    transport = int.Parse(Console.ReadLine());
+                    transport = double.Parse(Console.ReadLine());
                     if (transport >= 0)
                     {
 
                         Console.Write("Entertainment: ");
-                        entertainment = int.Parse(Console.ReadLine());
+                        entertainment = double.Parse(Console.ReadLine());
                         if (entertainment >= 0)
                         {
                             totalDailyExpenses += food;
@@ -216,8 +217,8 @@ public class ExpenseTracker
                             if (totalDailyExpenses > DataStore.AvailableBalance)
                             {
                                 Console.WriteLine("Warning: You cannot expense more than your available balance!");
-                                Console.WriteLine("Total daily expense you entered: " + totalDailyExpenses);
-                                Console.WriteLine("Total Available Balance: " + DataStore.AvailableBalance);
+                                Console.WriteLine($"Total daily expense you entered: ${totalDailyExpenses:F2}");
+                                Console.WriteLine($"Total Available Balance: ${DataStore.AvailableBalance:F2}");
                             }
                             else
                             {
@@ -229,7 +230,7 @@ public class ExpenseTracker
 
                                 //for calculating total expenses
                                 DataStore.TotalExpenses += totalDailyExpenses;
-                                Console.WriteLine("Total Daily Expenses: " + totalDailyExpenses);
+                                Console.WriteLine($"Total Daily Expenses: ${totalDailyExpenses:F2}");
                             }
 
                         }
@@ -269,19 +270,19 @@ public class ExpenseTracker
         public void monthlyExpense()
         {
             Console.WriteLine("Monthly Expense Details: ");
-            Console.WriteLine("Rent: " + (DataStore.Rent > 0 ? DataStore.Rent : 0));
-            Console.WriteLine("Groceries: " + (DataStore.Groceries > 0 ? DataStore.Groceries : 0));
-            Console.WriteLine("Utility Bills: " + (DataStore.UtilityBills > 0 ? DataStore.UtilityBills : 0));
-            Console.WriteLine("Total Monthly Expenses: " + DataStore.TotalMonthlyExpenses);
+            Console.WriteLine("Rent: $" + (DataStore.Rent > 0 ? $"{DataStore.Rent:F2}" : 0));
+            Console.WriteLine("Groceries: $" + (DataStore.Groceries > 0 ? $"{DataStore.Groceries:F2}" : 0));
+            Console.WriteLine("Utility Bills: $" + (DataStore.UtilityBills > 0 ? $"{DataStore.UtilityBills:F2}" : 0));
+            Console.WriteLine($"Total Monthly Expenses: ${DataStore.TotalMonthlyExpenses:F2}");
         }
 
         public void dailyExpense()
         {
             Console.WriteLine("Daily Expense Details:");
-            Console.WriteLine("Food: " + (DataStore.Food > 0 ? DataStore.Food : 0));
-            Console.WriteLine("Transport: " + (DataStore.Transport > 0 ? DataStore.Transport : 0));
-            Console.WriteLine("Entertainment: " + (DataStore.Entertainment > 0 ? DataStore.Entertainment : 0));
-            Console.WriteLine("Total Daily Expenses: " + DataStore.TotalDailyExpenses);
+            Console.WriteLine("Food: $" + (DataStore.Food > 0 ? $"{DataStore.Food:F2}" : 0));
+            Console.WriteLine("Transport: $" + (DataStore.Transport > 0 ? $"{DataStore.Transport:F2}" : 0));
+            Console.WriteLine("Entertainment: $" + (DataStore.Entertainment > 0 ? $"{DataStore.Entertainment:F2}" : 0));
+            Console.WriteLine($"Total Daily Expenses: ${DataStore.TotalDailyExpenses:F2}");
         }
     }
 
@@ -313,7 +314,7 @@ public class ExpenseTracker
 
                 while (true)
                 {
-                    Console.WriteLine("\nCurrent Balance: " + DataStore.AvailableBalance);
+                    Console.WriteLine($"\nCurrent Balance: ${DataStore.AvailableBalance:F2}");
                     Console.WriteLine("Choose an option:");
                     Console.WriteLine("1. Deposit Amount");
                     Console.WriteLine("2. Monthly Expense");
